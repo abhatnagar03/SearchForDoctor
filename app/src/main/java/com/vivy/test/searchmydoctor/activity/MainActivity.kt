@@ -1,21 +1,29 @@
 package com.vivy.test.searchmydoctor.activity
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
 import com.vivy.test.searchmydoctor.Module.ApplicationModule
 import com.vivy.test.searchmydoctor.Module.FetcherModule.Companion.loginFetcher
 import com.vivy.test.searchmydoctor.Module.FetcherModule.Companion.tokenRepository
 import com.vivy.test.searchmydoctor.R
+import com.vivy.test.searchmydoctor.Utils.Constants.MY_PERMISSIONS_REQUEST_LOCATION
 import com.vivy.test.searchmydoctor.Utils.FileUtils
 import com.vivy.test.searchmydoctor.contract.LoginContract
 import com.vivy.test.searchmydoctor.fetcher.LoginFetcher
+import com.vivy.test.searchmydoctor.locationManager.CurrentLatLong
+import com.vivy.test.searchmydoctor.locationManager.LocationCallbackListener
 import com.vivy.test.searchmydoctor.presenter.LoginPresenter
 import com.vivy.test.searchmydoctor.repository.TokenRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BasePresenterActivity<LoginContract.View, LoginContract.Presenter>(), LoginContract.View {
+
+class MainActivity : BasePresenterActivity<LoginContract.View, LoginContract.Presenter>(),
+        LoginContract.View {
     override fun onCreatePresenter() = LoginPresenter()
 
     private var mLoginFetcher: LoginFetcher = loginFetcher()
@@ -77,4 +85,10 @@ class MainActivity : BasePresenterActivity<LoginContract.View, LoginContract.Pre
         super.onPause()
         presenter?.activityPaused()
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+
 }

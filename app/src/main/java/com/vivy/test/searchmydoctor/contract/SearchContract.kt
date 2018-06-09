@@ -1,7 +1,10 @@
 package com.vivy.test.searchmydoctor.contract
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
+import com.vivy.test.searchmydoctor.activity.HomeActivity
 import com.vivy.test.searchmydoctor.fetcher.SearchFetcher
+import com.vivy.test.searchmydoctor.locationManager.LocationCallbackListener
 import com.vivy.test.searchmydoctor.model.DoctorsList
 import com.vivy.test.searchmydoctor.presenter.BasePresenter
 import com.vivy.test.searchmydoctor.view.BaseView
@@ -22,8 +25,11 @@ interface SearchContract {
         var context: Context
         var searchFetcher: SearchFetcher
 
-        fun searchDoctor(docName: String, lat: Float, long: Float)
-        fun getAllDoctors(lat: Float, long: Float)
+        fun searchDoctor(docName: String, lat: Double, long: Double)
+        fun getAllDoctors(lat: Double, long: Double)
+        fun fetchLocation(context: Context, listener: LocationCallbackListener)
+        fun getLayoutManager(): RecyclerView.LayoutManager
+        fun getAdapter(items: List<*>): RecyclerView.Adapter<*>
         fun activityPaused()
     }
 }

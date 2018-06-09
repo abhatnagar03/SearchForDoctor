@@ -15,5 +15,8 @@
     <string name="title_activity_login">Sign in</string>
     <string name="fail_login">Fail login</string>
     <string name="action_logout">Logout</string>
+    <string name="title_location_permission">Location Permission Required</string>
+    <string name="text_location_permission">You need to enable location permission in order to use the app\'s search feature</string>
+    <string name="ok">Ok</string>
 
 </resources>

@@ -16,13 +16,13 @@ interface ApiService {
                             @Query("password") password: String): Observable<LoginToken>
 
     @Headers("Accept: application/json")
-    @POST("api/users/me/doctors")
+    @GET("api/users/me/doctors")
     fun searchDoctorByName(@Query("search") name: String,
-                           @Query("lat") lat: Float,
-                           @Query("lng") lng: Float): Observable<DoctorsList>
+                           @Query("lat") lat: Double,
+                           @Query("lng") lng: Double): Observable<DoctorsList>
 
     @Headers("Accept: application/json")
     @GET("api/users/me/doctors")
-    fun searchAllDoctors(@Query("lat") lat: Float,
-                         @Query("lng") lng: Float): Observable<DoctorsList>
+    fun searchAllDoctors(@Query("lat") lat: Double,
+                         @Query("lng") lng: Double): Observable<DoctorsList>
 }

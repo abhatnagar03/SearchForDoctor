@@ -6,11 +6,11 @@ import io.reactivex.disposables.Disposable
 class SearchNetworkFetcher(private val networkManager: NetworkManager)
     : SearchFetcher{
 
-    override fun searchAllDoctors(lat: Float?, lng: Float?): Disposable {
-        return networkManager.searchAllDoctors(lat as Float, lng as Float)
+    override fun searchAllDoctors(lat: Double?, lng: Double?): Disposable {
+        return networkManager.searchAllDoctors(lat as Double, lng as Double)
     }
 
-    override fun searchDoctorByName(docName: String, lat: Float, longi: Float): Disposable {
+    override fun searchDoctorByName(docName: String, lat: Double, longi: Double): Disposable {
         return networkManager.searchDoctorByName(docName, lat, longi)
     }
 }

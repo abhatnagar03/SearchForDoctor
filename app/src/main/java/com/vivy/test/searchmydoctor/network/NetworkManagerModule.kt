@@ -6,6 +6,7 @@ import com.vivy.test.searchmydoctor.R
 import com.vivy.test.searchmydoctor.Utils.FileUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
 class NetworkManagerModule {
@@ -34,6 +35,7 @@ class NetworkManagerModule {
                         .retryOnConnectionFailure(true)
                         .readTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
                         .connectTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                         .addInterceptor(bearerAuthorizationRequestInterceptor()).build()
             }
 

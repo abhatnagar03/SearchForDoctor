@@ -6,6 +6,6 @@ import io.reactivex.disposables.Disposable;
  * Interface for search doctor service.
  */
 public interface SearchFetcher {
-    Disposable searchDoctorByName(String docName, Float lat, Float longi);
-    Disposable searchAllDoctors(Float lat, Float lng);
+    Disposable searchDoctorByName(String docName, Double lat, Double longi);
+    Disposable searchAllDoctors(Double lat, Double lng);
 }

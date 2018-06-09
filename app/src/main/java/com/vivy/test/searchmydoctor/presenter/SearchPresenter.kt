@@ -1,11 +1,18 @@
 package com.vivy.test.searchmydoctor.presenter
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import com.vivy.test.searchmydoctor.R
+import com.vivy.test.searchmydoctor.adapter.AdapterExample
 import com.vivy.test.searchmydoctor.contract.SearchContract
 import com.vivy.test.searchmydoctor.event.RequestFailureEvent
 import com.vivy.test.searchmydoctor.event.SearchSuccessEvent
 import com.vivy.test.searchmydoctor.eventbus.RxBus
 import com.vivy.test.searchmydoctor.fetcher.SearchFetcher
+import com.vivy.test.searchmydoctor.locationManager.CurrentLatLong
+import com.vivy.test.searchmydoctor.locationManager.LocationCallbackListener
+import com.vivy.test.searchmydoctor.model.Doctor
 import io.reactivex.disposables.Disposable
 
 class SearchPresenter() : SearchContract.Presenter, AbstractPresenter<SearchContract.View>() {
@@ -20,7 +27,7 @@ class SearchPresenter() : SearchContract.Presenter, AbstractPresenter<SearchCont
 
     private fun initSearch() {
         RxBus.listen(SearchSuccessEvent::class.java).subscribe({
-            //view?.hideProgress()
+            view?.hideProgress()
             view?.initializeList(it.getDoctors())
         })
 
@@ -30,12 +37,29 @@ class SearchPresenter() : SearchContract.Presenter, AbstractPresenter<SearchCont
         })
     }
 
-    override fun searchDoctor(docName: String, lat: Float, long: Float) {
+    override fun searchDoctor(docName: String, lat: Double, long: Double) {
+        view?.showProgress()
         disposable = searchFetcher.searchDoctorByName(docName, lat, long)
     }
 
-    override fun getAllDoctors(lat: Float, long: Float) {
-        disposable = searchFetcher.searchAllDoctors(52.534709f, 13.3976972f)
+    override fun getAllDoctors(lat: Double, long: Double) {
+        view?.showProgress()
+        disposable = searchFetcher.searchAllDoctors(lat, long)
+    }
+
+    override fun fetchLocation(context: Context, listener: LocationCallbackListener) {
+        CurrentLatLong(context, listener)
+    }
+
+    override fun getLayoutManager(): RecyclerView.LayoutManager {
+        return LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false)
+    }
+
+    override fun getAdapter(items: List<*>): RecyclerView.Adapter<*> {
+        return AdapterExample(context, items as ArrayList<Doctor>, R.layout.item_type_main)
     }
 
     override fun activityPaused() {

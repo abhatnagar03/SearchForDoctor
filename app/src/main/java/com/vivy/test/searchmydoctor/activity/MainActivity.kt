@@ -1,5 +1,6 @@
 package com.vivy.test.searchmydoctor.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -65,6 +66,7 @@ class MainActivity : BasePresenterActivity<LoginContract.View, LoginContract.Pre
         login_form.visibility = View.GONE
         rl_logout_container.visibility = View.VISIBLE
         tv_email.text = email
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 
     override fun successLogout() {

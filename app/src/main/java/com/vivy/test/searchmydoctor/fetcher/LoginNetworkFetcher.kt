@@ -1,6 +1,6 @@
 package com.vivy.test.searchmydoctor.fetcher
 
-import com.vivy.test.searchmydoctor.event.LoginFailureEvent
+import com.vivy.test.searchmydoctor.event.RequestFailureEvent
 import com.vivy.test.searchmydoctor.event.LoginTokenEvent
 import com.vivy.test.searchmydoctor.eventbus.RxBus
 import com.vivy.test.searchmydoctor.model.LoginToken
@@ -20,10 +20,10 @@ class LoginNetworkFetcher(private val networkManager: NetworkManager)
         if (null != response.body() && response.isSuccess)
             RxBus.publish(LoginTokenEvent(response.body()))
         else
-           RxBus.publish(LoginFailureEvent("Some error occurred"))
+           RxBus.publish(RequestFailureEvent("Some error occurred"))
     }
 
     override fun onFailure(t: Throwable) {
-        RxBus.publish(LoginFailureEvent(t.localizedMessage))
+        RxBus.publish(RequestFailureEvent(t.localizedMessage))
     }
 }

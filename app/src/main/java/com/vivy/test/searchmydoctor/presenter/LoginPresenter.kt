@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.Editable
 import com.vivy.test.searchmydoctor.R
 import com.vivy.test.searchmydoctor.contract.LoginContract
-import com.vivy.test.searchmydoctor.event.LoginFailureEvent
+import com.vivy.test.searchmydoctor.event.RequestFailureEvent
 import com.vivy.test.searchmydoctor.event.LoginTokenEvent
 import com.vivy.test.searchmydoctor.eventbus.RxBus
 import com.vivy.test.searchmydoctor.fetcher.LoginFetcher
@@ -28,7 +28,7 @@ class LoginPresenter() : LoginContract.Presenter, AbstractPresenter<LoginContrac
             loginRepo.setRefreshToken(it.getToken())
         })
 
-        RxBus.listen(LoginFailureEvent::class.java).subscribe({
+        RxBus.listen(RequestFailureEvent::class.java).subscribe({
             view?.hideProgress()
             view?.failLoginError(it.toString())
         })

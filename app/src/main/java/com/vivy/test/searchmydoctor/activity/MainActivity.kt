@@ -1,25 +1,32 @@
 package com.vivy.test.searchmydoctor.activity
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.vivy.test.searchmydoctor.Module.ApplicationModule
 import com.vivy.test.searchmydoctor.Module.FetcherModule.Companion.loginFetcher
+import com.vivy.test.searchmydoctor.Module.FetcherModule.Companion.tokenRepository
 import com.vivy.test.searchmydoctor.R
 import com.vivy.test.searchmydoctor.Utils.FileUtils
-import com.vivy.test.searchmydoctor.event.LoginFailureEvent
-import com.vivy.test.searchmydoctor.event.LoginTokenEvent
-import com.vivy.test.searchmydoctor.eventbus.RxBus
+import com.vivy.test.searchmydoctor.contract.LoginContract
 import com.vivy.test.searchmydoctor.fetcher.LoginFetcher
+import com.vivy.test.searchmydoctor.presenter.LoginPresenter
+import com.vivy.test.searchmydoctor.repository.TokenRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BasePresenterActivity<LoginContract.View, LoginContract.Presenter>(), LoginContract.View {
+    override fun onCreatePresenter() = LoginPresenter()
 
     private var mLoginFetcher: LoginFetcher = loginFetcher()
+    private var mTokenRepository: TokenRepository = tokenRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        presenter?.context = this
+        presenter?.loginFetcher = mLoginFetcher
+        presenter?.loginRepo = mTokenRepository
 
         val credentials: Array<String>
         val authString = FileUtils.createStringFromInputStream(ApplicationModule.getResources().openRawResource(R.raw.user_credentials))
@@ -30,15 +37,37 @@ class MainActivity : BaseActivity() {
         email.setText(userId)
         password.setText(pass)
         sign_in_btn.setOnClickListener {
-            mLoginFetcher.login(email.text.toString(), password.text.toString())
+            presenter?.loginUser(email = email.text, password = password.text)
         }
+    }
 
-        RxBus.listen(LoginTokenEvent::class.java).subscribe({
-            Toast.makeText(this, it.getToken().accessToken.toString(), Toast.LENGTH_LONG).show();
-        })
+    override fun showProgress() {
+        progress_layout.visibility = View.VISIBLE
+    }
 
-        RxBus.listen(LoginFailureEvent::class.java).subscribe({
-            Toast.makeText(this, it.toString(), Toast.LENGTH_LONG).show();
-        })
+    override fun hideProgress() {
+        progress_layout.visibility = View.GONE
+    }
+
+    override fun updatePasswordError(string: String) {
+        password.error = string
+    }
+
+    override fun updateEmailError(string: String) {
+        email.error = string
+    }
+
+    override fun failLoginError(string: String) {
+        Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun successLogin(email: String) {
+        login_form.visibility = View.GONE
+        rl_logout_container.visibility = View.VISIBLE
+        tv_email.text = email
+    }
+
+    override fun successLogout() {
+        TODO("Out of scope")
     }
 }

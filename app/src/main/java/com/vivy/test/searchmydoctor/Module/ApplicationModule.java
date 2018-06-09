@@ -6,7 +6,7 @@ import android.content.res.Resources;
 public class ApplicationModule {
     private static Application sApplication;
 
-    public static Application getsApplication() {
+    public static Application applicationContext() {
         return sApplication;
     }
 

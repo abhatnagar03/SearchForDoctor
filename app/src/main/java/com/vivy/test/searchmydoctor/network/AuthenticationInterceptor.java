@@ -6,7 +6,6 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-
 public class AuthenticationInterceptor implements Interceptor {
 
     private String authToken;

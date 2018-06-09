@@ -2,7 +2,6 @@ package com.vivy.test.searchmydoctor.network
 
 import com.vivy.test.searchmydoctor.model.LoginToken
 import retrofit.Call
-import retrofit.http.Body
 import retrofit.http.Headers
 import retrofit.http.POST
 import retrofit.http.Query

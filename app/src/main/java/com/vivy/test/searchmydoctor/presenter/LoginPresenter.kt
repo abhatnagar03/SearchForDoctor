@@ -9,12 +9,15 @@ import com.vivy.test.searchmydoctor.event.LoginTokenEvent
 import com.vivy.test.searchmydoctor.eventbus.RxBus
 import com.vivy.test.searchmydoctor.fetcher.LoginFetcher
 import com.vivy.test.searchmydoctor.repository.TokenRepository
+import io.reactivex.disposables.Disposable
 
 class LoginPresenter() : LoginContract.Presenter, AbstractPresenter<LoginContract.View>() {
 
     override lateinit var context: Context
     override lateinit var loginFetcher: LoginFetcher
     override lateinit var loginRepo: TokenRepository
+
+    private var disposable: Disposable? = null
 
     init {
         initLogin()
@@ -59,16 +62,21 @@ class LoginPresenter() : LoginContract.Presenter, AbstractPresenter<LoginContrac
         return true
     }
 
-    override fun loginUser(email: Editable, password: Editable) {
-        if (validateLogin(email, password))
-            loginFetcher.login(email.toString(), password.toString())
-    }
-
     private fun isEmailValid(email: String?) = email?.contains("@") ?: false
 
     private fun isPasswordValid(password: String?) = !password.isNullOrEmpty() || password?.let { it.length > 3 } ?: false
 
+    override fun loginUser(email: Editable, password: Editable) {
+        if (validateLogin(email, password))
+            disposable = loginFetcher.login(email.toString(), password.toString())
+    }
+
     override fun logout() {
         view?.successLogout()
+    }
+
+    override fun activityPaused() {
+        disposable?.dispose()
+        view?.hideProgress()
     }
 }

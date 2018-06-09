@@ -1,9 +1,11 @@
 package com.vivy.test.searchmydoctor.fetcher;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  * Interface for search doctor service.
  */
 public interface SearchFetcher {
-    void searchDoctorByName(String docName, Float lat, Float longi);
-    void searchAllDoctors(Float lat, Float lng);
+    Disposable searchDoctorByName(String docName, Float lat, Float longi);
+    Disposable searchAllDoctors(Float lat, Float lng);
 }

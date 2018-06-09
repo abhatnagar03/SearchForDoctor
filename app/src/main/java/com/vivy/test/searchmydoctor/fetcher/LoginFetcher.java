@@ -1,5 +1,7 @@
 package com.vivy.test.searchmydoctor.fetcher;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  * Interface for login service.
  */
@@ -10,5 +12,5 @@ public interface LoginFetcher {
      * @param username Username
      * @param password Password
      */
-    void login(String username, String password);
+    Disposable login(String username, String password);
 }

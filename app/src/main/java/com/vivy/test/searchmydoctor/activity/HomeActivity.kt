@@ -38,4 +38,9 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
 
     override fun showFailureError(string: String) {
     }
+
+    override fun onPause() {
+        super.onPause()
+        presenter?.activityPaused()
+    }
 }

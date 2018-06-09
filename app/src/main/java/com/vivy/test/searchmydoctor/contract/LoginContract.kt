@@ -27,7 +27,7 @@ interface LoginContract {
         var loginRepo: TokenRepository
 
         fun loginUser(email: Editable, password: Editable)
-
         fun logout()
+        fun activityPaused()
     }
 }

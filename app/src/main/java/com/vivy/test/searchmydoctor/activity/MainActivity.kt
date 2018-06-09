@@ -72,4 +72,9 @@ class MainActivity : BasePresenterActivity<LoginContract.View, LoginContract.Pre
     override fun successLogout() {
         TODO("Out of scope")
     }
+
+    override fun onPause() {
+        super.onPause()
+        presenter?.activityPaused()
+    }
 }

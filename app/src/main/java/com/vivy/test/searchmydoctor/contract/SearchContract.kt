@@ -24,5 +24,6 @@ interface SearchContract {
 
         fun searchDoctor(docName: String, lat: Float, long: Float)
         fun getAllDoctors(lat: Float, long: Float)
+        fun activityPaused()
     }
 }

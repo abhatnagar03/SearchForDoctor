@@ -1,11 +1,11 @@
 package com.vivy.test.searchmydoctor.network
 
-import com.squareup.okhttp.Interceptor
-import com.squareup.okhttp.OkHttpClient
 import com.vivy.test.searchmydoctor.Module.ApplicationModule.getResources
 import com.vivy.test.searchmydoctor.Module.FetcherModule.Companion.tokenRepository
 import com.vivy.test.searchmydoctor.R
 import com.vivy.test.searchmydoctor.Utils.FileUtils
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
 class NetworkManagerModule {
@@ -17,26 +17,24 @@ class NetworkManagerModule {
         private fun loginClient(): OkHttpClient {
             if (loginClient == null) {
                 loginClient = OkHttpClient()
-                loginClient!!.setRetryOnConnectionFailure(true)
-                loginClient!!.setReadTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
-                loginClient!!.setConnectTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
-
-                // Adding interceptor to inject basic authorisation
-                loginClient!!.interceptors().add(basicAuthorizationRequestInterceptor())
+                        .newBuilder()
+                        .retryOnConnectionFailure(true)
+                        .readTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                        .connectTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                        .addInterceptor(basicAuthorizationRequestInterceptor()).build()
             }
 
             return loginClient as OkHttpClient
         }
 
-        private fun searchClient(): OkHttpClient{
+        private fun searchClient(): OkHttpClient {
             if (searchClient == null) {
                 searchClient = OkHttpClient()
-                searchClient!!.setRetryOnConnectionFailure(true)
-                searchClient!!.setReadTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
-                searchClient!!.setConnectTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
-
-                // Adding interceptor to inject basic authorisation
-                searchClient!!.interceptors().add(bearerAuthorizationRequestInterceptor())
+                        .newBuilder()
+                        .retryOnConnectionFailure(true)
+                        .readTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                        .connectTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                        .addInterceptor(bearerAuthorizationRequestInterceptor()).build()
             }
 
             return searchClient as OkHttpClient

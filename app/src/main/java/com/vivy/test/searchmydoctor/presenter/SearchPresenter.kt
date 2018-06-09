@@ -6,12 +6,14 @@ import com.vivy.test.searchmydoctor.event.RequestFailureEvent
 import com.vivy.test.searchmydoctor.event.SearchSuccessEvent
 import com.vivy.test.searchmydoctor.eventbus.RxBus
 import com.vivy.test.searchmydoctor.fetcher.SearchFetcher
+import io.reactivex.disposables.Disposable
 
 class SearchPresenter() : SearchContract.Presenter, AbstractPresenter<SearchContract.View>() {
 
     override lateinit var context: Context
     override lateinit var searchFetcher: SearchFetcher
 
+    private var disposable: Disposable? = null
     init {
         initSearch()
     }
@@ -29,10 +31,14 @@ class SearchPresenter() : SearchContract.Presenter, AbstractPresenter<SearchCont
     }
 
     override fun searchDoctor(docName: String, lat: Float, long: Float) {
-        searchFetcher.searchDoctorByName(docName, lat, long)
+        disposable = searchFetcher.searchDoctorByName(docName, lat, long)
     }
 
     override fun getAllDoctors(lat: Float, long: Float) {
-        searchFetcher.searchAllDoctors(52.534709f, 13.3976972f)
+        disposable = searchFetcher.searchAllDoctors(52.534709f, 13.3976972f)
+    }
+
+    override fun activityPaused() {
+        disposable?.dispose()
     }
 }

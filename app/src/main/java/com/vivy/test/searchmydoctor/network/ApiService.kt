@@ -22,7 +22,4 @@ interface ApiService {
     @GET("api/users/me/doctors")
     fun searchAllDoctors(@Query("lat") lat: Double,
                          @Query("lng") lng: Double): Observable<DoctorsList>
-
-    @GET("api/users/me/files")
-    fun getPhoto(@Path("fileId") path: String): Observable<Url>
 }

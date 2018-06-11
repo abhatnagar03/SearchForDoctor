@@ -1,5 +1,5 @@
 # SearchForDoctor
-The app is developed using Kotlin, rxjava and Java to provide a search interface for doctors near me to showcase technical proficiency, coding style, library awareness and approach.
+The app is developed using Kotlin, rxjava and Java to provide a search interface for doctors nearby to showcase technical proficiency, coding style, library awareness and approach.
 
 # Features
 

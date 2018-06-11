@@ -65,6 +65,7 @@ class MainActivity : BasePresenterActivity<LoginContract.View, LoginContract.Pre
 
     override fun successLogin() {
         startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 
     override fun successLogout() {

@@ -44,6 +44,8 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
         presenter?.loginRepo = tokenRepository()
 
         setupRecyclerView()
+
+        logout.setOnClickListener { presenter?.logout() }
     }
 
     override fun showProgress() {
@@ -56,6 +58,9 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
 
     override fun updateList(doctors: DoctorsList) {
     }
+    override fun finishActivity() {
+        finish()
+    }
 
     override fun initializeList(doctors: DoctorsList) {
         recycler_view.adapter = AdapterExample(this, doctors.doctorsList as ArrayList, R.layout.item_type_main)
@@ -63,7 +68,6 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
 
     override fun showFailureError(string: String) {
         Toast.makeText(this, "Session Expired", Toast.LENGTH_SHORT).show()
-        finish()
     }
 
     private fun setupRecyclerView() {

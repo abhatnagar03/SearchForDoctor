@@ -36,8 +36,13 @@ class SearchPresenter() : SearchContract.Presenter, AbstractPresenter<SearchCont
         RxBus.listen(RequestFailureEvent::class.java).subscribe({
             view?.hideProgress()
             view?.showFailureError(it.toString())
-            loginRepo.clearRepo()
+            logout()
         })
+    }
+
+    override fun logout() {
+        loginRepo.clearRepo()
+        view?.finishActivity()
     }
 
     override fun searchDoctorByText(searchText: String, lat: Double, long: Double) {

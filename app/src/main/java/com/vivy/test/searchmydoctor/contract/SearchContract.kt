@@ -18,6 +18,7 @@ interface SearchContract {
         fun updateList(doctors: DoctorsList)
         fun initializeList(doctors: DoctorsList)
         fun showFailureError(string: String)
+        fun finishActivity()
     }
 
     interface Presenter : BasePresenter<View> {
@@ -32,5 +33,6 @@ interface SearchContract {
         fun getLayoutManager(): RecyclerView.LayoutManager
         fun getAdapter(items: List<*>): RecyclerView.Adapter<*>
         fun activityPaused()
+        fun logout()
     }
 }

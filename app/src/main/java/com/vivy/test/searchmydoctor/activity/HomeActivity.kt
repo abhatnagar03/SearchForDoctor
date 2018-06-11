@@ -58,18 +58,19 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
     }
 
     override fun initializeList(doctors: DoctorsList) {
-        Toast.makeText(this, " " + doctors.doctorsList.size, Toast.LENGTH_SHORT).show()
         recycler_view.adapter = AdapterExample(this, doctors.doctorsList as ArrayList, R.layout.item_type_main)
     }
 
     override fun showFailureError(string: String) {
+        Toast.makeText(this, "Session Expired", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     private fun setupRecyclerView() {
-        recycler_view.setLayoutManager(presenter?.getLayoutManager())
+        recycler_view.layoutManager = presenter?.getLayoutManager()
 
-        recycler_view.addItemDecoration(ItemOffsetDecoration(recycler_view.getContext(), R.dimen.item_decoration))
-        recycler_view.setItemAnimator(DefaultItemAnimator())
+        recycler_view.addItemDecoration(ItemOffsetDecoration(recycler_view.context, R.dimen.item_decoration))
+        recycler_view.itemAnimator = DefaultItemAnimator()
     }
 
     override fun onResume() {

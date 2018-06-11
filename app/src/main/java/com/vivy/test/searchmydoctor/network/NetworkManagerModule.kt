@@ -22,6 +22,7 @@ class NetworkManagerModule {
                         .retryOnConnectionFailure(true)
                         .readTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
                         .connectTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                         .addInterceptor(basicAuthorizationRequestInterceptor()).build()
             }
 
@@ -29,7 +30,6 @@ class NetworkManagerModule {
         }
 
         private fun searchClient(): OkHttpClient {
-            if (searchClient == null) {
                 searchClient = OkHttpClient()
                         .newBuilder()
                         .retryOnConnectionFailure(true)
@@ -37,7 +37,6 @@ class NetworkManagerModule {
                         .connectTimeout(AS_TIMEOUT.toLong(), TimeUnit.SECONDS)
                         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                         .addInterceptor(bearerAuthorizationRequestInterceptor()).build()
-            }
 
             return searchClient as OkHttpClient
         }

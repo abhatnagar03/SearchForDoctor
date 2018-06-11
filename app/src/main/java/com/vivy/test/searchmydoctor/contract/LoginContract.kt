@@ -7,6 +7,9 @@ import com.vivy.test.searchmydoctor.presenter.BasePresenter
 import com.vivy.test.searchmydoctor.repository.TokenRepository
 import com.vivy.test.searchmydoctor.view.BaseView
 
+/**
+ * Login contract binding login view and login presenter
+ */
 interface LoginContract {
 
     interface View : BaseView {
@@ -16,7 +19,7 @@ interface LoginContract {
         fun updatePasswordError(string: String)
         fun updateEmailError(string: String)
         fun failLoginError(string: String)
-        fun successLogin(email: String)
+        fun successLogin()
         fun successLogout()
     }
 
@@ -29,5 +32,6 @@ interface LoginContract {
         fun loginUser(email: Editable, password: Editable)
         fun logout()
         fun activityPaused()
+        fun activityResumed()
     }
 }

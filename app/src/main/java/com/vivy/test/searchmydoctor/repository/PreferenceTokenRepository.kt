@@ -26,4 +26,8 @@ class PreferenceTokenRepository(private var stringEncryptor:
         preferenceRepo.writePreference(preferenceRepo.PREF_TOKEN_FILE, preferenceRepo.PREF_REFRESH_TOKEN,
                 stringEncryptor.encryptString(refToken.refreshToken))
     }
+
+    override fun clearRepo() {
+        preferenceRepo.clearAll(preferenceRepo.PREF_TOKEN_FILE)
+    }
 }

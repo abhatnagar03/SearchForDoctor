@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SearchMyDoctor</string>
+    <string name="app_name">DoctorsNearMe</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -9,14 +9,15 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."
     </string>
     <string name="title_activity_login">Sign in</string>
     <string name="fail_login">Fail login</string>
     <string name="action_logout">Logout</string>
     <string name="title_location_permission">Location Permission Required</string>
     <string name="text_location_permission">You need to enable location permission in order to use the app\'s search feature</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
+    <string name="action_search">lookup for..</string>
+    <string name="enable_settings">Location permission is required for search, enable it in app settings</string>
 
 </resources>

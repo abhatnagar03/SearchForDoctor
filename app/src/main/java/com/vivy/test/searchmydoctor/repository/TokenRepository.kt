@@ -7,4 +7,5 @@ interface TokenRepository {
     fun setAccessToken(accessToken : LoginToken)
     fun getRefreshToken() : String
     fun setRefreshToken(refToken : LoginToken)
+    fun clearRepo()
 }

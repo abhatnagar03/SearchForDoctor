@@ -20,7 +20,6 @@ import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.location.*
 import com.vivy.test.searchmydoctor.Utils.Constants.MY_PERMISSIONS_REQUEST_LOCATION
 
-
 class CurrentLatLong(private var mcontext: Context, private var locationCallback: LocationCallbackListener)
     : GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -118,7 +117,6 @@ class CurrentLatLong(private var mcontext: Context, private var locationCallback
                         if (location != null) {
                             // Logic to handle location object
                             mLocation = location;
-                            locationCallback.onLocationRecieved(mLocation?.latitude as Double, mLocation?.longitude as Double)
                         }
                     })
         }
@@ -135,8 +133,8 @@ class CurrentLatLong(private var mcontext: Context, private var locationCallback
 
     override fun onLocationChanged(location: Location?) {
         if (null != location) {
-            locationCallback.onLocationRecieved(location.latitude, location.longitude)
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, listener)
+            locationCallback.onLocationRecieved(location.latitude, location.longitude)
         }
     }
 }

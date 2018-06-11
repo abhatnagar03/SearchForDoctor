@@ -1,6 +1,7 @@
 package com.vivy.test.searchmydoctor.adapter
 
 import android.content.Context
+import android.opengl.Visibility
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -28,14 +29,19 @@ class AdapterExample(val context: Context, val itemList: ArrayList<Doctor>, val 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.title?.text = itemList.get(position).name
         holder.desc?.text = itemList.get(position).address
-        Glide
-                .with(context)
-                .load(itemList.get(position).photo)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)   // cache both original & resized image
-                .centerCrop()
-                .crossFade()
-                .error(R.drawable.placeholder)
-                .into(holder.image)
+        if(null != itemList.get(position).photo) {
+            holder.image.visibility = View.VISIBLE
+            Glide
+                    .with(context)
+                    .load(itemList.get(position).photo)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)   // cache both original & resized image
+                    .centerCrop()
+                    .crossFade()
+                    .error(R.drawable.placeholder)
+                    .into(holder.image)
+        } else {
+            holder.image.visibility = View.GONE
+        }
     }
 
     class ItemHolder (view: View) : RecyclerView.ViewHolder(view) {
@@ -44,5 +50,4 @@ class AdapterExample(val context: Context, val itemList: ArrayList<Doctor>, val 
         val desc = view.txt_desc
         val image = view.imageView
     }
-
 }

@@ -10,7 +10,7 @@ class SearchNetworkFetcher(private val networkManager: NetworkManager)
         return networkManager.searchAllDoctors(lat as Double, lng as Double)
     }
 
-    override fun searchDoctorByName(docName: String, lat: Double, longi: Double): Disposable {
-        return networkManager.searchDoctorByName(docName, lat, longi)
+    override fun searchDoctorByText(searchText: String, lat: Double, longi: Double): Disposable {
+        return networkManager.searchDoctorByName(searchText, lat, longi)
     }
 }

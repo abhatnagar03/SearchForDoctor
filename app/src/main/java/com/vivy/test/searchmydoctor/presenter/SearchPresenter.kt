@@ -13,12 +13,14 @@ import com.vivy.test.searchmydoctor.fetcher.SearchFetcher
 import com.vivy.test.searchmydoctor.locationManager.CurrentLatLong
 import com.vivy.test.searchmydoctor.locationManager.LocationCallbackListener
 import com.vivy.test.searchmydoctor.model.Doctor
+import com.vivy.test.searchmydoctor.repository.TokenRepository
 import io.reactivex.disposables.Disposable
 
 class SearchPresenter() : SearchContract.Presenter, AbstractPresenter<SearchContract.View>() {
 
     override lateinit var context: Context
     override lateinit var searchFetcher: SearchFetcher
+    override lateinit var loginRepo : TokenRepository
 
     private var disposable: Disposable? = null
     init {
@@ -34,12 +36,13 @@ class SearchPresenter() : SearchContract.Presenter, AbstractPresenter<SearchCont
         RxBus.listen(RequestFailureEvent::class.java).subscribe({
             view?.hideProgress()
             view?.showFailureError(it.toString())
+            loginRepo.clearRepo()
         })
     }
 
-    override fun searchDoctor(docName: String, lat: Double, long: Double) {
+    override fun searchDoctorByText(searchText: String, lat: Double, long: Double) {
         view?.showProgress()
-        disposable = searchFetcher.searchDoctorByName(docName, lat, long)
+        disposable = searchFetcher.searchDoctorByText(searchText, lat, long)
     }
 
     override fun getAllDoctors(lat: Double, long: Double) {

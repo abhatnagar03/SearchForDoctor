@@ -1,11 +1,10 @@
 package com.vivy.test.searchmydoctor;
 
-import android.app.Application;
-import android.content.res.Resources;
+import android.support.multidex.MultiDexApplication;
 
 import com.vivy.test.searchmydoctor.Module.ApplicationModule;
 
-public class SearchApplication extends Application {
+public class SearchApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {

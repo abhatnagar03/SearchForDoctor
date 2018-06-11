@@ -2,16 +2,17 @@ package com.vivy.test.searchmydoctor.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.vivy.test.searchmydoctor.Module.FetcherModule
+import com.vivy.test.searchmydoctor.Module.FetcherModule.Companion.tokenRepository
 import com.vivy.test.searchmydoctor.R
 import com.vivy.test.searchmydoctor.Utils.Constants
 import com.vivy.test.searchmydoctor.adapter.AdapterExample
@@ -22,10 +23,6 @@ import com.vivy.test.searchmydoctor.model.DoctorsList
 import com.vivy.test.searchmydoctor.presenter.SearchPresenter
 import com.vivy.test.searchmydoctor.widget.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.activity_home.*
-import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.SearchView
-import android.view.Menu
-
 
 open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchContract.Presenter>(),
         SearchContract.View, LocationCallbackListener {
@@ -44,6 +41,7 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
 
         presenter?.context = this
         presenter?.searchFetcher = mSearchFetcher
+        presenter?.loginRepo = tokenRepository()
 
         setupRecyclerView()
     }
@@ -95,7 +93,7 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
         when (requestCode) {
             Constants.MY_PERMISSIONS_REQUEST_LOCATION -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // location-related task you need to do.
                     if (ContextCompat.checkSelfPermission(this,
@@ -105,8 +103,7 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
                         presenter?.fetchLocation(this, this)
                     }
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    Toast.makeText(this, getString(R.string.enable_settings), Toast.LENGTH_SHORT).show()
                 }
                 return
             }
@@ -119,25 +116,22 @@ open class HomeActivity() : BasePresenterActivity<SearchContract.View, SearchCon
         val searchView = MenuItemCompat.getActionView(searchItem) as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                supportActionBar?.title = query
+                searchView.setQuery("", false)
+                searchView.clearFocus()
                 // Fetch the data remotely
-                presenter?.searchDoctor(query, latitude,
+                presenter?.searchDoctorByText(query, latitude,
                         longitude)
                 return true
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                supportActionBar?.title = null
-                if (s.length > 3) {
-                    presenter?.searchDoctor(s, latitude,
-                            longitude)
-                    return true
-                }
                 return false
             }
         })
         searchView.setOnCloseListener {
-            presenter?.getAllDoctors(latitude, longitude)
             supportActionBar?.title = getString(R.string.app_name)
+            presenter?.getAllDoctors(latitude, longitude)
             false
         }
         return true

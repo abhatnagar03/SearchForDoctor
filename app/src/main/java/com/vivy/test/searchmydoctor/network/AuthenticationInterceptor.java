@@ -1,6 +1,5 @@
 package com.vivy.test.searchmydoctor.network;
 
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;

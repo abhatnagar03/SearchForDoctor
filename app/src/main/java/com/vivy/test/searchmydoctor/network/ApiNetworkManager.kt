@@ -1,6 +1,5 @@
 package com.vivy.test.searchmydoctor.network
 
-import com.vivy.test.searchmydoctor.BuildConfig
 import com.vivy.test.searchmydoctor.event.LoginTokenEvent
 import com.vivy.test.searchmydoctor.event.RequestFailureEvent
 import com.vivy.test.searchmydoctor.event.SearchSuccessEvent
@@ -9,7 +8,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

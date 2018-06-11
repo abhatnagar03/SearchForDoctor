@@ -8,6 +8,7 @@ android {
         applicationId "com.vivy.test.searchmydoctor"
         minSdkVersion 15
         targetSdkVersion 27
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -43,6 +44,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:11.8.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'com.android.support:multidex:1.0.3'
 
     compile 'com.android.support:cardview-v7:27.1.1'
     compile 'com.android.support:recyclerview-v7:27.1.1'

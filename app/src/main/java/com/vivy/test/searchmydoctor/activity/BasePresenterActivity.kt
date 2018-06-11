@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import com.vivy.test.searchmydoctor.presenter.BasePresenter
 import com.vivy.test.searchmydoctor.view.BaseView
 
+/**
+ * Base activity with view and presenter
+ */
 abstract class BasePresenterActivity<in VIEW: BaseView, P : BasePresenter<VIEW>> : AppCompatActivity() {
 
     protected var presenter: P? = null

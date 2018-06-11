@@ -26,7 +26,7 @@ class LoginPresenter() : LoginContract.Presenter, AbstractPresenter<LoginContrac
     private fun initLogin() {
         RxBus.listen(LoginTokenEvent::class.java).subscribe({
             view?.hideProgress()
-            view?.successLogin("")
+            view?.successLogin()
             loginRepo.setAccessToken(it.getToken())
             loginRepo.setRefreshToken(it.getToken())
         })
@@ -78,5 +78,13 @@ class LoginPresenter() : LoginContract.Presenter, AbstractPresenter<LoginContrac
     override fun activityPaused() {
         disposable?.dispose()
         view?.hideProgress()
+    }
+    override fun activityResumed() {
+        view?.showProgress()
+        if(!loginRepo.getAccessToken().isEmpty()) {
+            view?.successLogin()
+        } else {
+            view?.hideProgress()
+        }
     }
 }
